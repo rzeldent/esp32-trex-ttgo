@@ -1,6 +1,6 @@
 # TTGO - T-Rex game
 
-A copy of the game originally programmed by [VelozR]( https://github.com/VolosR/TRexTTGOdisplay). This is a clone of the Google 'no-internet' connection browser game.
+A copy of the game originally programmed by [VelozR]( https://github.com/VolosR/TRexTTGOdisplay). This is a clone of the Google 'no-internet' connection browser game. Updated sprites and graphics and ready to be used in PlatformIO.
 
 ![Start screen](assets/20211231_171534.jpg)
 ![Action screen](assets/20211231_171609.jpg)
