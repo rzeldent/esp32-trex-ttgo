@@ -7,8 +7,6 @@ A copy of the game originally programmed by [VelozR]( https://github.com/VolosR/
 
 ## Usage
 Download the repo, open it in [**PlatformIO**](https://platformio.org/) and flash it to the ESP32-TTGO-Display.
-**Copy the file settings.h to .settings.h to keep your settings secret.**
-This file is by default (on purpose) not present and a compiler error is generated!
 
 - Press the reset button on top to reset
 - Press the bottom button to start the game and jump
