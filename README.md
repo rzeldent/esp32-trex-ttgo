@@ -6,7 +6,7 @@ A copy of the game originally programmed by [VelozR]( https://github.com/VolosR/
 ![Action screen](assets/20211231_171609.jpg)
 
 ## Usage
-Download the repo, open it in [**PlatformIO**](https://platformio.org/) and flash it to the ESP32-TTGO-Display.
+Clone the repo, open it in [**PlatformIO**](https://platformio.org/) and flash it to the ESP32-TTGO-Display.
 
 - Press the reset button on top to reset
 - Press the bottom button to start the game and jump
