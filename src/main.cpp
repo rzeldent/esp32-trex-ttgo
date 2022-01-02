@@ -4,6 +4,11 @@
 #define BUTTON_TOP 35
 #define BUTTON_BOTTOM 0
 
+constexpr auto font_16pt = 2;
+constexpr auto font_26pt = 4;
+constexpr auto font_48pt = 6;
+constexpr auto font_48pt_lcd = 7;
+
 TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite img = TFT_eSprite(&tft);
 TFT_eSprite sprite_dino = TFT_eSprite(&tft);
@@ -26,7 +31,7 @@ float clouds[2] = {(float)random(0, 80), (float)random(100, 180)};
 float bumps[2];
 int bumpsF[2];
 
-float eX[2] = {(float)random(240, 310), (float)random(380, 460)};
+float eX[2] = {(float)random(TFT_HEIGHT, 310), (float)random(380, 460)};
 int ef[2] = {0, 1};
 
 float speed = 1;
@@ -52,12 +57,14 @@ void setup()
   tft.fillScreen(TFT_WHITE);
   tft.setRotation(1);
 
+  img.setTextColor(TFT_BLACK,TFT_WHITE);
+
   img.setColorDepth(16);
   sprite_dino.setColorDepth(16);
   sprite_enemy1.setColorDepth(16);
   sprite_enemy2.setColorDepth(16);
 
-  img.createSprite(240, 100);
+  img.createSprite(TFT_HEIGHT, 100);
   sprite_dino.createSprite(image_dino.width, image_dino.height);
   sprite_enemy1.createSprite(image_enemy.width, image_enemy.height);
   sprite_enemy2.createSprite(image_enemy.width, image_enemy.height);
@@ -106,7 +113,7 @@ void setup()
 void drawS(int x, int y, int frame)
 {
   img.fillSprite(TFT_WHITE);
-  img.drawLine(0, 84, 240, 84, TFT_BLACK);
+  img.drawLine(0, 84, TFT_HEIGHT, 84, TFT_BLACK);
 
   for (int i = 0; i < 6; i++)
   {
@@ -148,7 +155,7 @@ void drawS(int x, int y, int frame)
   {
     eX[m] = eX[m] - speed;
     if (eX[m] < -20)
-      eX[m] = random(240, 300);
+      eX[m] = random(TFT_HEIGHT, 300);
     ef[m] = random(0, 2);
   }
 
@@ -161,7 +168,7 @@ void drawS(int x, int y, int frame)
   sprite_dino.pushToSprite(&img, x, y, TFT_WHITE);
 
   score = millis() / 120;
-  img.drawString(String(score), 204, 0, 2);
+  img.drawRightString(String(score), TFT_HEIGHT, 0, font_16pt);
   img.pushSprite(0, 17);
 
   if (score > t + 100)
@@ -178,8 +185,8 @@ void checkColision()
     if (eX[i] < x + image_dino.width / 2 && eX[i] > x && y > 25)
     {
       gameRun = 0;
-      tft.fillRect(0, 30, 240, 110, TFT_WHITE);
-      tft.pushImage(0, 0, image_game_over.width, image_game_over.height, image_game_over.data);
+      tft.fillRect(0, 30, TFT_HEIGHT, 110, TFT_WHITE);
+      tft.pushImage(10, 30, image_game_over.width, image_game_over.height, image_game_over.data);
       delay(500);
     }
   }

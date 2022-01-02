@@ -21,4 +21,4 @@ Clone the repo, open it in [**PlatformIO**](https://platformio.org/) and flash i
 - Enjoy!
 
 ## Credits
-All the credits go to [VelozR](https://github.com/VolosR).
+All the credits go to VelozR. See the original video on YouTube: [T-Rex game](https://www.youtube.com/watch?v=ilC4LIQZ77g).
