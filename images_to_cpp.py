@@ -62,13 +62,12 @@ def main():
             output_file.write('static const uint16_t image_data_' + file_group + sprite_index + '[' + str(height * width) + '] = {\n')
 
             def convert_R8G8B8_to_R5G6B5(rgb): return (
-                rgb[0] >> 3) << 11 | (rgb[1] >> 2) << 5 | (rgb[2] >> 3)
+                (rgb[0] >> 3) << 11) | ((rgb[1] >> 2) << 5) | (rgb[2] >> 3)
 
             for y in range(0, height):
                 for x in range(width):
                     value = pixels[y * width + x]
-                    output_file.write(
-                        '0x' + hex(convert_R8G8B8_to_R5G6B5(value))[2:].zfill(4))
+                    output_file.write('0x' + hex(convert_R8G8B8_to_R5G6B5(value))[2:].zfill(4))
                     if (y*width+x < width*height - 1):
                         output_file.write(',')
                 output_file.write('\n')
