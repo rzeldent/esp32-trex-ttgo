@@ -8,7 +8,23 @@
 {
     "version": "0.2.0",
     "configurations": [
-        
+        {
+            "name": "Python Debug images_to_cpp",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": true,
+            "program": "${workspaceRoot}/images_to_cpp.py",
+            "cwd": "${workspaceRoot}",
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit",
+                "RedirectOutput"
+            ],
+            "args": [
+                "images/",
+                "include/images.h"
+            ]
+        },
         {
             "type": "platformio-debug",
             "request": "launch",
@@ -40,13 +56,6 @@
             "toolchainBinDir": "/Users/rene/.platformio/packages/toolchain-xtensa32/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "loadMode": "manual"
-        },
-        {
-            "name": "Python: images_to_cpp",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder}/images_to_cpp.py",
-            "args": ["images/", "include/images.h"],
         }
     ]
 }

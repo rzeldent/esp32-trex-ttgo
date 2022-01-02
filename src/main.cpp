@@ -4,26 +4,6 @@
 #define BUTTON_TOP 35
 #define BUTTON_BOTTOM 0
 
-const image_t images_dino[] =
-{
-    dino_1,
-    dino_2,
-    dino_3
-};
-
-const image_t images_bump[] =
-{
-    bump_1,
-    bump_2
-};
-
-const image_t images_enemy[] = 
-{
-  enemy_1,
-  enemy_2
-};
-
-
 TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite img = TFT_eSprite(&tft);
 TFT_eSprite sprite_dino = TFT_eSprite(&tft);
@@ -42,14 +22,14 @@ float linesX[6];
 int linesW[6];
 float linesX2[6];
 int linesW2[6];
-float clouds[2] = {random(0, 80), random(100, 180)};
+float clouds[2] = {(float)random(0, 80), (float)random(100, 180)};
 float bumps[2];
 int bumpsF[2];
 
-float eX[2] = {random(240, 310), random(380, 460)};
+float eX[2] = {(float)random(240, 310), (float)random(380, 460)};
 int ef[2] = {0, 1};
 
-float sped = 1;
+float speed = 1;
 int x = 30;
 int y = 58;
 float dir = -1.4;
@@ -66,6 +46,7 @@ void setup()
 {
   pinMode(BUTTON_BOTTOM, INPUT_PULLUP);
   pinMode(BUTTON_TOP, INPUT_PULLUP);
+
   tft.init();
   tft.setSwapBytes(true);
   tft.fillScreen(TFT_WHITE);
@@ -77,9 +58,9 @@ void setup()
   sprite_enemy2.setColorDepth(16);
 
   img.createSprite(240, 100);
-  sprite_dino.createSprite(images_dino[0].width, images_dino[0].height);
-  sprite_enemy1.createSprite(images_enemy[0].width, images_enemy[0].height);
-  sprite_enemy2.createSprite(images_enemy[1].width, images_enemy[1].height);
+  sprite_dino.createSprite(image_dino.width, image_dino.height);
+  sprite_enemy1.createSprite(image_enemy.width, image_enemy.height);
+  sprite_enemy2.createSprite(image_enemy.width, image_enemy.height);
 
   tft.fillScreen(TFT_WHITE);
 
@@ -101,7 +82,7 @@ void setup()
     bumpsF[n] = random(0, 2);
   }
 
-  tft.pushImage(0, 0, no_internet.width, no_internet.height, no_internet.data);
+  tft.pushImage(0, 0, image_no_internet.width, image_no_internet.height, image_no_internet.data);
 
   while (digitalRead(BUTTON_BOTTOM) != 0)
   {
@@ -130,14 +111,14 @@ void drawS(int x, int y, int frame)
   for (int i = 0; i < 6; i++)
   {
     img.drawLine(linesX[i], 87, linesX[i] + linesW[i], 87, TFT_BLACK);
-    linesX[i] = linesX[i] - sped;
+    linesX[i] = linesX[i] - speed;
     if (linesX[i] < -14)
     {
       linesX[i] = random(245, 280);
       linesW[i] = random(1, 14);
     }
     img.drawLine(linesX2[i], 98, linesX2[i] + linesW2[i], 98, TFT_BLACK);
-    linesX2[i] = linesX2[i] - sped;
+    linesX2[i] = linesX2[i] - speed;
     if (linesX2[i] < -14)
     {
       linesX2[i] = random(245, 280);
@@ -146,7 +127,7 @@ void drawS(int x, int y, int frame)
   }
   for (int j = 0; j < 2; j++)
   {
-    img.pushImage(clouds[j], 20, cloud.width, cloud.height, cloud.data);
+    img.pushImage(clouds[j], 20, image_cloud.width, image_cloud.height, image_cloud.data);
     clouds[j] = clouds[j] - cloudSpeed;
     if (clouds[j] < -40)
       clouds[j] = random(244, 364);
@@ -154,8 +135,8 @@ void drawS(int x, int y, int frame)
 
   for (int n = 0; n < 2; n++)
   {
-    img.pushImage(bumps[n], 80, images_bump[bumpsF[n]].width, images_bump[bumpsF[n]].height, images_bump[bumpsF[n]].data);
-    bumps[n] = bumps[n] - sped;
+    img.pushImage(bumps[n], 80, image_bump.width, image_bump.height, image_bump.data[bumpsF[n]]);
+    bumps[n] = bumps[n] - speed;
     if (bumps[n] < -40)
     {
       bumps[n] = random(244, 364);
@@ -165,15 +146,15 @@ void drawS(int x, int y, int frame)
 
   for (int m = 0; m < 2; m++)
   {
-    eX[m] = eX[m] - sped;
+    eX[m] = eX[m] - speed;
     if (eX[m] < -20)
       eX[m] = random(240, 300);
     ef[m] = random(0, 2);
   }
 
-sprite_enemy1.pushImage(0, 0, images_enemy[0].width, images_enemy[0].height, images_enemy[0].data);
-sprite_enemy2.pushImage(0, 0, images_enemy[1].width, images_enemy[1].height, images_enemy[1].data);
-sprite_dino.pushImage(0, 0, images_dino[frame].width, images_dino[frame].height, images_dino[frame].data);
+  sprite_enemy1.pushImage(0, 0, image_enemy.width, image_enemy.height, image_enemy.data[0]);
+  sprite_enemy2.pushImage(0, 0, image_enemy.width, image_enemy.height, image_enemy.data[1]);
+  sprite_dino.pushImage(0, 0, image_dino.width, image_dino.height, image_dino.data[frame]);
 
   sprite_enemy1.pushToSprite(&img, eX[0], 56, TFT_WHITE);
   sprite_enemy2.pushToSprite(&img, eX[1], 56, TFT_WHITE);
@@ -186,7 +167,7 @@ sprite_dino.pushImage(0, 0, images_dino[frame].width, images_dino[frame].height,
   if (score > t + 100)
   {
     t = score;
-    sped = sped + 0.1;
+    speed = speed + 0.1;
   }
 }
 
@@ -194,12 +175,11 @@ void checkColision()
 {
   for (int i = 0; i < 2; i++)
   {
-    if (eX[i] < x + images_dino[0].width / 2 && eX[i] > x && y > 25)
+    if (eX[i] < x + image_dino.width / 2 && eX[i] > x && y > 25)
     {
       gameRun = 0;
       tft.fillRect(0, 30, 240, 110, TFT_WHITE);
-      tft.pushImage(10,30, game_over.width, game_over.height, game_over.data);
-      tft.pushImage(10,30, game_over.width, game_over.height, game_over.data);
+      tft.pushImage(0, 0, image_game_over.width, image_game_over.height, image_game_over.data);
       delay(500);
     }
   }
